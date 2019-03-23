@@ -3,6 +3,10 @@
   * C++98 (boost smart pointers from boost header only, need only BOOST_PATH variable)
   * [FreeType](https://github.com/aseprite/freetype2) library for fonts rendering (my container_cairo_ft) 
   * in CMakeLists.txt defined LITEHTML_UTF8
+  
+# Demo
+
+To demo the work you can use [litehtmltopng](https://github.com/hovlad/litehtmltopng).
 
 # What is litehtml?
 
