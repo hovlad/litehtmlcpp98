@@ -6,7 +6,7 @@
   
 # Demo
 
-To demo the work you can use [litehtmltopng](https://github.com/hovlad/litehtmltopng).
+To demo the work you can use [litehtmltopng](https://github.com/hovlad/litehtmltopng) simple render html to png based on litehtml engine.
 
 # What is litehtml?
 
