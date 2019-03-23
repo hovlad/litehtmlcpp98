@@ -1,7 +1,7 @@
 # Differences from [litehtml](https://github.com/litehtml/litehtml)
 
-  * C++98
-  * boost smart pointers (boost header only, need only BOOST_PATH variable)
+  * C++98 (boost smart pointers from boost header only, need only BOOST_PATH variable)
+  * [FreeType](https://github.com/aseprite/freetype2) library for fonts rendering (my container_cairo_ft) 
   * in CMakeLists.txt defined LITEHTML_UTF8
 
 # What is litehtml?
