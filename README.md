@@ -1,5 +1,6 @@
 # Differences from [litehtml](https://github.com/litehtml/litehtml)
 
+  * C++98
   * boost smart pointers (boost header only, need only BOOST_PATH variable)
   * in CMakeLists.txt defined LITEHTML_UTF8
 
