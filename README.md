@@ -6,12 +6,12 @@
 
 # What is litehtmlcpp98?
 
-**litehtmlcpp98** is c++98 fork [litehtml](https://github.com/litehtml/litehtml).
+**litehtmlcpp98** is c++98 fork [litehtml](https://github.com/litehtml/litehtml) 
 
 # Differences from [litehtml](https://github.com/litehtml/litehtml)
 
   * C++98 (BOOST smart pointers from header only, need only BOOST_PATH variable)
-  * [FreeType](https://github.com/aseprite/freetype2) library for fonts rendering (my container_cairo_ft) 
+  * [FreeType](https://github.com/aseprite/freetype2) library for fonts rendering [document_container](https://github.com/litehtml/litehtml/wiki/document_container) implementation in [my container_cairo_ft](https://github.com/hovlad/litehtmlcpp98/tree/master/containers/cairo_ft)
   * in CMakeLists.txt defined LITEHTML_UTF8
   
 # Demo
