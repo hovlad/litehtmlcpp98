@@ -1,7 +1,7 @@
 # Differences from [litehtml](https://github.com/litehtml/litehtml)
 
-boost smart pointers (boost header only)
-in CMakeLists.txt defined LITEHTML_UTF8
+  * boost smart pointers (boost header only)
+  * in CMakeLists.txt defined LITEHTML_UTF8
 
 # What is litehtml?
 
