@@ -17,7 +17,7 @@ void litehtml::el_style::parse_attributes()
 {
 	tstring text;
 
-	for(auto& el : m_children)
+	for (litehtml::element::ptr& el : m_children)
 	{
 		el->get_text(text);
 	}

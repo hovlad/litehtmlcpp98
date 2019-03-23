@@ -62,7 +62,7 @@ bool litehtml::html_tag::removeChild(const element::ptr &el)
 
 void litehtml::html_tag::clearRecursive()
 {
-	for(auto& el : m_children)
+	for (litehtml::element::ptr& el : m_children)
 	{
 		el->clearRecursive();
 		el->parent(nullptr);
@@ -128,7 +128,7 @@ void litehtml::html_tag::select_all(const css_selector& selector, elements_vecto
 		res.push_back(shared_from_this());
 	}
 	
-	for(auto& el : m_children)
+	for (litehtml::element::ptr& el : m_children)
 	{
 		el->select_all(selector, res);
 	}
@@ -150,7 +150,7 @@ litehtml::element::ptr litehtml::html_tag::select_one( const css_selector& selec
 		return shared_from_this();
 	}
 
-	for(auto& el : m_children)
+	for (litehtml::element::ptr& el : m_children)
 	{
 		element::ptr res = el->select_one(selector);
 		if(res)
@@ -165,7 +165,7 @@ void litehtml::html_tag::apply_stylesheet( const litehtml::css& stylesheet )
 {
 	remove_before_after();
 
-	for(const auto& sel : stylesheet.selectors())
+	for (const litehtml::css_selector::ptr& sel : stylesheet.selectors())
 	{
 		int apply = select(*sel, false);
 
@@ -224,7 +224,7 @@ void litehtml::html_tag::apply_stylesheet( const litehtml::css& stylesheet )
 		}
 	}
 
-	for(auto& el : m_children)
+	for (litehtml::element::ptr& el : m_children)
 	{
 		if(el->get_display() != display_inline_text)
 		{
@@ -506,7 +506,7 @@ void litehtml::html_tag::parse_styles(bool is_reparse)
 
 	if(!is_reparse)
 	{
-		for(auto& el : m_children)
+		for(litehtml::element::ptr& el : m_children)
 		{
 			el->parse_styles();
 		}
@@ -585,7 +585,7 @@ void litehtml::html_tag::init()
 		m_grid->finish();
 	}
 
-	for (auto& el : m_children)
+	for (litehtml::element::ptr& el : m_children)
 	{
 		el->init();
 	}
@@ -962,7 +962,7 @@ int litehtml::html_tag::get_floats_height(element_float el_float) const
 
 		bool process = false;
 
-		for(const auto& fb : m_floats_left)
+		for (const litehtml::floated_box& fb : m_floats_left)
 		{
 			process = false;
 			switch(el_float)
@@ -996,7 +996,7 @@ int litehtml::html_tag::get_floats_height(element_float el_float) const
 		}
 
 
-		for(const auto fb : m_floats_right)
+		for (const litehtml::floated_box fb : m_floats_right)
 		{
 			process = false;
 			switch(el_float)
@@ -1047,7 +1047,7 @@ int litehtml::html_tag::get_left_floats_height() const
 		int h = 0;
 		if(!m_floats_left.empty())
 		{
-			for (const auto& fb : m_floats_left)
+			for (const litehtml::floated_box& fb : m_floats_left)
 			{
 				h = std::max(h, fb.pos.bottom());
 			}
@@ -1070,7 +1070,7 @@ int litehtml::html_tag::get_right_floats_height() const
 		int h = 0;
 		if(!m_floats_right.empty())
 		{
-			for(const auto& fb : m_floats_right)
+			for (const litehtml::floated_box& fb : m_floats_right)
 			{
 				h = std::max(h, fb.pos.bottom());
 			}
@@ -1096,7 +1096,7 @@ int litehtml::html_tag::get_line_left( int y )
 		}
 
 		int w = 0;
-		for(const auto& fb : m_floats_left)
+		for (const litehtml::floated_box& fb : m_floats_left)
 		{
 			if (y >= fb.pos.top() && y < fb.pos.bottom())
 			{
@@ -1140,7 +1140,7 @@ int litehtml::html_tag::get_line_right( int y, int def_right )
 
 		int w = def_right;
 		m_cahe_line_right.is_default = true;
-		for(const auto& fb : m_floats_right)
+		for (const litehtml::floated_box& fb : m_floats_right)
 		{
 			if(y >= fb.pos.top() && y < fb.pos.bottom())
 			{
@@ -1267,7 +1267,7 @@ int litehtml::html_tag::fix_line_width( int max_width, element_float flt )
 
 			elements_vector els;
 			m_boxes.back()->new_width(line_left, line_right, els);
-			for(auto& el : els)
+			for (litehtml::element::ptr& el : els)
 			{
 				int rw = place_element(el, max_width);
 				if(rw > ret_width)
@@ -1358,7 +1358,7 @@ int litehtml::html_tag::find_next_line_top( int top, int width, int def_right )
 		int new_top = top;
 		int_vector points;
 
-		for(const auto& fb : m_floats_left)
+		for (const litehtml::floated_box& fb : m_floats_left)
 		{
 			if(fb.pos.top() >= top)
 			{
@@ -1376,7 +1376,7 @@ int litehtml::html_tag::find_next_line_top( int top, int width, int def_right )
 			}
 		}
 
-		for (const auto& fb : m_floats_right)
+		for (const litehtml::floated_box& fb : m_floats_right)
 		{
 			if (fb.pos.top() >= top)
 			{
@@ -1399,7 +1399,7 @@ int litehtml::html_tag::find_next_line_top( int top, int width, int def_right )
 			sort(points.begin(), points.end(), std::less<int>( ));
 			new_top = points.back();
 
-			for(auto pt : points)
+			for (int pt : points)
 			{
 				int pos_left	= 0;
 				int pos_right	= def_right;
@@ -1648,7 +1648,7 @@ void litehtml::html_tag::calc_auto_margins(int parent_width)
 
 void litehtml::html_tag::parse_attributes()
 {
-	for(auto& el : m_children)
+	for(litehtml::element::ptr& el : m_children)
 	{
 		el->parse_attributes();
 	}
@@ -1656,7 +1656,7 @@ void litehtml::html_tag::parse_attributes()
 
 void litehtml::html_tag::get_text( tstring& text )
 {
-	for (auto& el : m_children)
+	for (litehtml::element::ptr& el : m_children)
 	{
 		el->get_text(text);
 	}
@@ -1676,7 +1676,7 @@ void litehtml::html_tag::get_inline_boxes( position::vector& boxes )
 {
 	litehtml::box* old_box = 0;
 	position pos;
-	for(auto& el : m_children)
+	for(litehtml::element::ptr& el : m_children)
 	{
 		if(!el->skip())
 		{
@@ -1811,7 +1811,7 @@ bool litehtml::html_tag::find_styles_changes( position::vector& redraw_boxes, in
 		refresh_styles();
 		parse_styles();
 	}
-	for (auto& el : m_children)
+	for (litehtml::element::ptr& el : m_children)
 	{
 		if(!el->skip())
 		{
@@ -2143,7 +2143,7 @@ int litehtml::html_tag::render_inline(const element::ptr &container, int max_wid
 	}
 	bool was_space = false;
 
-	for (auto& el : m_children)
+	for (litehtml::element::ptr& el : m_children)
 	{
 		// skip spaces to make rendering a bit faster
 		if (skip_spaces)
@@ -2453,7 +2453,7 @@ bool litehtml::html_tag::set_class( const tchar_t* pclass, bool add )
 
 	if(add)
 	{
-		for( auto & _class : classes  )
+		for (litehtml::tstring & _class : classes)
 		{
 			if(std::find(m_class_values.begin(), m_class_values.end(), _class) == m_class_values.end())
 			{
@@ -2463,9 +2463,9 @@ bool litehtml::html_tag::set_class( const tchar_t* pclass, bool add )
 		}
 	} else
 	{
-		for( const auto & _class : classes )
+		for (const litehtml::tstring & _class : classes)
 		{
-			auto end = std::remove(m_class_values.begin(), m_class_values.end(), _class);
+			litehtml::string_vector::iterator end = std::remove(m_class_values.begin(), m_class_values.end(), _class);
 
 			if(end != m_class_values.end())
 			{
@@ -2656,7 +2656,7 @@ bool litehtml::html_tag::is_first_child_inline(const element::ptr& el) const
 {
 	if(!m_children.empty())
 	{
-		for (const auto& this_el : m_children)
+		for (const litehtml::element::ptr& this_el : m_children)
 		{
 			if (!this_el->is_white_space())
 			{
@@ -2684,7 +2684,7 @@ bool litehtml::html_tag::is_last_child_inline(const element::ptr& el)
 {
 	if(!m_children.empty())
 	{
-		for (auto this_el = m_children.rbegin(); this_el < m_children.rend(); ++this_el)
+		for (litehtml::elements_vector::reverse_iterator this_el = m_children.rbegin(); this_el < m_children.rend(); ++this_el)
 		{
 			if (!(*this_el)->is_white_space())
 			{
@@ -2994,7 +2994,7 @@ bool litehtml::html_tag::fetch_positioned()
 
 	litehtml::element_position el_pos;
 
-	for(auto& el : m_children)
+	for(litehtml::element::ptr& el : m_children)
 	{
 		el_pos = el->get_element_position();
 		if (el_pos != element_position_static)
@@ -3025,7 +3025,7 @@ void litehtml::html_tag::render_positioned(render_type rt)
 
 	element_position el_position;
 	bool process;
-	for (auto& el : m_positioned)
+	for (litehtml::element::ptr& el : m_positioned)
 	{
 		el_position = el->get_element_position();
 
@@ -3278,7 +3278,7 @@ litehtml::overflow litehtml::html_tag::get_overflow() const
 bool litehtml::html_tag::is_nth_child(const element::ptr& el, int num, int off, bool of_type) const
 {
 	int idx = 1;
-	for(const auto& child : m_children)
+	for (const litehtml::element::ptr& child : m_children)
 	{
 		if(child->get_display() != display_inline_text)
 		{
@@ -3384,7 +3384,7 @@ void litehtml::html_tag::calc_document_size( litehtml::size& sz, int x /*= 0*/, 
 
 		if(m_overflow == overflow_visible)
 		{
-			for(auto& el : m_children)
+			for(litehtml::element::ptr& el : m_children)
 			{
 				el->calc_document_size(sz, x + m_pos.x, y + m_pos.y);
 			}
@@ -3410,7 +3410,7 @@ void litehtml::html_tag::get_redraw_box(litehtml::position& pos, int x /*= 0*/, 
 
 		if(m_overflow == overflow_visible)
 		{
-			for(auto& el : m_children)
+			for(litehtml::element::ptr& el : m_children)
 			{
 				if(el->get_element_position() != element_position_fixed)
 				{
@@ -3424,7 +3424,7 @@ void litehtml::html_tag::get_redraw_box(litehtml::position& pos, int x /*= 0*/, 
 litehtml::element::ptr litehtml::html_tag::find_adjacent_sibling( const element::ptr& el, const css_selector& selector, bool apply_pseudo /*= true*/, bool* is_pseudo /*= 0*/ )
 {
 	element::ptr ret;
-	for(auto& e : m_children)
+	for (litehtml::element::ptr& e : m_children)
 	{
 		if(e->get_display() != display_inline_text)
 		{
@@ -3461,7 +3461,7 @@ litehtml::element::ptr litehtml::html_tag::find_adjacent_sibling( const element:
 litehtml::element::ptr litehtml::html_tag::find_sibling(const element::ptr& el, const css_selector& selector, bool apply_pseudo /*= true*/, bool* is_pseudo /*= 0*/)
 {
 	element::ptr ret = 0;
-	for(auto& e : m_children)
+	for (litehtml::element::ptr& e : m_children)
 	{
 		if(e->get_display() != display_inline_text)
 		{
@@ -3494,7 +3494,7 @@ litehtml::element::ptr litehtml::html_tag::find_sibling(const element::ptr& el, 
 bool litehtml::html_tag::is_only_child(const element::ptr& el, bool of_type) const
 {
 	int child_count = 0;
-	for(const auto& child : m_children)
+	for (const litehtml::element::ptr& child : m_children)
 	{
 		if(child->get_display() != display_inline_text)
 		{
@@ -3608,7 +3608,7 @@ bool litehtml::html_tag::have_inline_child() const
 {
 	if(!m_children.empty())
 	{
-		for(const auto& el : m_children)
+		for(const litehtml::element::ptr& el : m_children)
 		{
 			if(!el->is_white_space())
 			{
@@ -3623,7 +3623,7 @@ void litehtml::html_tag::refresh_styles()
 {
 	remove_before_after();
 
-	for (auto& el : m_children)
+	for (litehtml::element::ptr& el : m_children)
 	{
 		if(el->get_display() != display_inline_text)
 		{
@@ -3633,7 +3633,7 @@ void litehtml::html_tag::refresh_styles()
 
 	m_style.clear();
 
-	for (auto& usel : m_used_styles)
+	for (used_selector::ptr& usel : m_used_styles)
 	{
 		usel->m_used = false;
 
@@ -3888,7 +3888,7 @@ const litehtml::background* litehtml::html_tag::get_background(bool own_only)
 		// if this is root element (<html>) try to get background from body
 		if (!have_parent())
 		{
-			for (const auto& el : m_children)
+			for (const litehtml::element::ptr& el : m_children)
 			{
 				if( el->is_body() )
 				{
@@ -3992,7 +3992,7 @@ int litehtml::html_tag::render_box(int x, int y, int max_width, bool second_pass
 
 	bool was_space = false;
 
-	for (auto el : m_children)
+	for (litehtml::element::ptr el : m_children)
 	{
 		// we don't need process absolute and fixed positioned element on the second pass
 		if (second_pass)
@@ -4172,7 +4172,7 @@ int litehtml::html_tag::render_box(int x, int y, int max_width, bool second_pass
 
 	if (is_floats_holder() && !second_pass)
 	{
-		for (const auto& fb : m_floats_left)
+		for (const litehtml::floated_box& fb : m_floats_left)
 		{
 			fb.el->apply_relative_shift(fb.el->parent()->calc_width(m_pos.width));
 		}
@@ -4554,7 +4554,7 @@ void litehtml::html_tag::draw_children_box(uint_ptr hdc, int x, int y, const pos
 	doc->container()->get_client_rect(browser_wnd);
 
 	element::ptr el;
-	for (auto& item : m_children)
+	for (litehtml::element::ptr& item : m_children)
 	{
 		el = item;
 		if (el->is_visible())
