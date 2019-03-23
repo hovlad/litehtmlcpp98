@@ -9,7 +9,7 @@ namespace litehtml
 	{
 		tstring m_text;
 	public:
-		el_script(const std::shared_ptr<litehtml::document>& doc);
+		el_script(const lhmemory::shared_ptr<litehtml::document>& doc);
 		virtual ~el_script();
 
 		virtual void			parse_attributes() override;

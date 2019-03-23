@@ -3,7 +3,7 @@
 #include "document.h"
 
 
-litehtml::el_style::el_style(const std::shared_ptr<litehtml::document>& doc) : litehtml::element(doc)
+litehtml::el_style::el_style(const lhmemory::shared_ptr<litehtml::document>& doc) : litehtml::element(doc)
 {
 
 }

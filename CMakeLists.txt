@@ -46,13 +46,17 @@ set(SOURCE_LITEHTML
 add_library(${PROJECT_NAME} ${SOURCE_LITEHTML})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    CXX_STANDARD 11
     C_STANDARD 99
 )
 
 # Export litehtml includes.
 target_include_directories(${PROJECT_NAME} PUBLIC src)
 target_include_directories(${PROJECT_NAME} PUBLIC include)
+target_include_directories(${PROJECT_NAME} PUBLIC src/litehtml_boost)# enable litehtml use BOOST smart pointers (header only BOOST parts)
+target_include_directories(${PROJECT_NAME} PUBLIC $ENV{BOOST_PATH})# BOOST_PATH example for Windows: D:\boost_1_55_0
+
+# Set LITEHTML_UTF8 define.
+target_compile_definitions(${PROJECT_NAME} PRIVATE LITEHTML_UTF8)
 
 # Gumbo
 target_link_libraries(${PROJECT_NAME} PUBLIC gumbo)

@@ -5,7 +5,7 @@
 #define LITEHTML_EMPTY_FUNC			{}
 #define LITEHTML_RETURN_FUNC(ret)	{return ret;}
 
-litehtml::element::element(const std::shared_ptr<litehtml::document>& doc) : m_doc(doc)
+litehtml::element::element(const lhmemory::shared_ptr<litehtml::document>& doc) : m_doc(doc)
 {
 	m_box		= 0;
 	m_skip		= false;

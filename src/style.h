@@ -40,7 +40,7 @@ namespace litehtml
 	class style
 	{
 	public:
-		typedef std::shared_ptr<style>		ptr;
+		typedef lhmemory::shared_ptr<style>		ptr;
 		typedef std::vector<style::ptr>		vector;
 	private:
 		props_map			m_properties;

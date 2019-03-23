@@ -80,7 +80,7 @@ class container_cairo_ft :	public litehtml::document_container
 	cairo_t*					m_temp_cr;
     cairo_clip_box::vector		m_clips;
 protected:
-	typedef std::shared_ptr<cario_image> image_ptr;
+	typedef lhmemory::shared_ptr<cario_image> image_ptr;
 	typedef std::map<litehtml::tstring, image_ptr >	images_map;
 	images_map					m_images;
 	FT_Library					m_ft_library;
@@ -116,11 +116,11 @@ public:
 	virtual void						draw_background(litehtml::uint_ptr hdc, const litehtml::background_paint& bg) override;
 	virtual void						draw_borders(litehtml::uint_ptr hdc, const litehtml::borders& borders, const litehtml::position& draw_pos, bool root) override;
 	virtual void 						draw_list_marker(litehtml::uint_ptr hdc, const litehtml::list_marker& marker) override;
-	virtual std::shared_ptr<litehtml::element>	create_element(const litehtml::tchar_t *tag_name,
+	virtual lhmemory::shared_ptr<litehtml::element>	create_element(const litehtml::tchar_t *tag_name,
 																 const litehtml::string_map &attributes,
-																 const std::shared_ptr<litehtml::document> &doc) override;
+																 const lhmemory::shared_ptr<litehtml::document> &doc) override;
 	virtual void						get_language(litehtml::tstring& language, litehtml::tstring & culture) const override;
-	virtual void 						link(const std::shared_ptr<litehtml::document> &ptr, const litehtml::element::ptr& el) override;
+	virtual void 						link(const lhmemory::shared_ptr<litehtml::document> &ptr, const litehtml::element::ptr& el) override;
 
 	virtual	void						transform_text(litehtml::tstring& text, litehtml::text_transform tt) override;
 	virtual void						set_clip(const litehtml::position& pos, const litehtml::border_radiuses& bdr_radius, bool valid_x, bool valid_y) override;

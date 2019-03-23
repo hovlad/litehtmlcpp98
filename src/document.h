@@ -49,13 +49,13 @@ namespace litehtml
 
 	class html_tag;
 
-	class document : public std::enable_shared_from_this<document>
+	class document : public lhmemory::enable_shared_from_this<document>
 	{
 	public:
-		typedef std::shared_ptr<document>	ptr;
-		typedef std::weak_ptr<document>		weak_ptr;
+		typedef lhmemory::shared_ptr<document>	ptr;
+		typedef lhmemory::weak_ptr<document>		weak_ptr;
 	private:
-		std::shared_ptr<element>			m_root;
+		lhmemory::shared_ptr<element>			m_root;
 		document_container*					m_container;
 		fonts_map							m_fonts;
 		css_text::vector					m_css;

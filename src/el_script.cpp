@@ -3,7 +3,7 @@
 #include "document.h"
 
 
-litehtml::el_script::el_script(const std::shared_ptr<litehtml::document>& doc) : litehtml::element(doc)
+litehtml::el_script::el_script(const lhmemory::shared_ptr<litehtml::document>& doc) : litehtml::element(doc)
 {
 
 }

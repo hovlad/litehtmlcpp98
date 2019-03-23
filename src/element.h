@@ -1,7 +1,7 @@
 #ifndef LH_ELEMENT_H
 #define LH_ELEMENT_H
 
-#include <memory>
+#include "lhmemory.h"
 #include "stylesheet.h"
 #include "css_offsets.h"
 
@@ -9,7 +9,7 @@ namespace litehtml
 {
 	class box;
 
-	class element : public std::enable_shared_from_this<element>
+	class element : public lhmemory::enable_shared_from_this<element>
 	{
 		friend class block_box;
 		friend class line_box;
@@ -17,11 +17,11 @@ namespace litehtml
 		friend class el_table;
 		friend class document;
 	public:
-		typedef std::shared_ptr<litehtml::element>		ptr;
-		typedef std::weak_ptr<litehtml::element>		weak_ptr;
+		typedef lhmemory::shared_ptr<litehtml::element>		ptr;
+		typedef lhmemory::weak_ptr<litehtml::element>		weak_ptr;
 	protected:
-		std::weak_ptr<element>		m_parent;
-		std::weak_ptr<litehtml::document>	m_doc;
+		lhmemory::weak_ptr<element>		m_parent;
+		lhmemory::weak_ptr<litehtml::document>	m_doc;
 		litehtml::box*				m_box;
 		elements_vector				m_children;
 		position					m_pos;
@@ -32,7 +32,7 @@ namespace litehtml
 		
 		virtual void select_all(const css_selector& selector, elements_vector& res);
 	public:
-		element(const std::shared_ptr<litehtml::document>& doc);
+		element(const lhmemory::shared_ptr<litehtml::document>& doc);
 		virtual ~element();
 
 		// returns refer to m_pos member;
@@ -89,7 +89,7 @@ namespace litehtml
 		int							get_inline_shift_right();
 		void						apply_relative_shift(int parent_width);
 
-		std::shared_ptr<document>	get_document() const;
+		lhmemory::shared_ptr<document>	get_document() const;
 
 		virtual elements_vector		select_all(const tstring& selector);
 		virtual elements_vector		select_all(const css_selector& selector);
@@ -394,7 +394,7 @@ namespace litehtml
 		return m_pos;
 	}
 
-	inline std::shared_ptr<document> element::get_document() const
+	inline lhmemory::shared_ptr<document> element::get_document() const
 	{
 		return m_doc.lock();
 	}

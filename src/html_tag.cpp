@@ -8,7 +8,7 @@
 #include <locale>
 #include "el_before_after.h"
 
-litehtml::html_tag::html_tag(const std::shared_ptr<litehtml::document>& doc) : litehtml::element(doc)
+litehtml::html_tag::html_tag(const lhmemory::shared_ptr<litehtml::document>& doc) : litehtml::element(doc)
 {
 	m_box_sizing			= box_sizing_content_box;
 	m_z_index				= 0;
@@ -3579,7 +3579,7 @@ litehtml::element::ptr litehtml::html_tag::get_element_before()
 			return m_children.front();
 		}
 	}
-	element::ptr el = std::make_shared<el_before>(get_document());
+	element::ptr el = lhmemory::make_shared<el_before>(get_document());
 	el->parent(shared_from_this());
 	m_children.insert(m_children.begin(), el);
 	return el;
@@ -3594,7 +3594,7 @@ litehtml::element::ptr litehtml::html_tag::get_element_after()
 			return m_children.back();
 		}
 	}
-	element::ptr el = std::make_shared<el_after>(get_document());
+	element::ptr el = lhmemory::make_shared<el_after>(get_document());
 	appendChild(el);
 	return el;
 }
