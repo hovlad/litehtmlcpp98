@@ -3018,6 +3018,15 @@ int litehtml::html_tag::get_zindex() const
 	return m_z_index;
 }
 
+class logic1
+{
+public:
+	bool operator()(const litehtml::element::ptr& _Left, const litehtml::element::ptr& _Right)
+	{
+		return (_Left->get_zindex() < _Right->get_zindex());
+	}
+};
+
 void litehtml::html_tag::render_positioned(render_type rt)
 {
 	position wnd_position;
@@ -3220,10 +3229,10 @@ void litehtml::html_tag::render_positioned(render_type rt)
 
 	if(!m_positioned.empty())
 	{
-		std::stable_sort(m_positioned.begin(), m_positioned.end(), [](const litehtml::element::ptr& _Left, const litehtml::element::ptr& _Right)
+		std::stable_sort(m_positioned.begin(), m_positioned.end(), logic1()/*[](const litehtml::element::ptr& _Left, const litehtml::element::ptr& _Right)
 		{
 			return (_Left->get_zindex() < _Right->get_zindex());
-		});
+		}*/);
 	}
 }
 

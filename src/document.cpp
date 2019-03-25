@@ -640,6 +640,17 @@ void litehtml::document::add_media_list( media_query_list::ptr list )
 	}
 }
 
+class logic2
+{
+	litehtml::element::ptr& annon_tag;
+public:
+	logic2(litehtml::element::ptr& _annon_tag) : annon_tag(_annon_tag) {}
+	void operator()(litehtml::element::ptr& el)
+	{
+		annon_tag->appendChild(el);
+	}
+};
+
 void litehtml::document::create_node(GumboNode* node, elements_vector& elements)
 {
 	switch (node->type)
@@ -679,10 +690,11 @@ void litehtml::document::create_node(GumboNode* node, elements_vector& elements)
 					child.clear();
 					create_node(static_cast<GumboNode*> (node->v.element.children.data[i]), child);
 					std::for_each(child.begin(), child.end(), 
-						[&ret](element::ptr& el)
+						logic2(ret)
+						/*[&ret](element::ptr& el)
 						{
 							ret->appendChild(el);
-						}
+						}*/
 					);
 				}
 				elements.push_back(ret);
@@ -796,13 +808,51 @@ void litehtml::document::fix_tables_layout()
 	}
 }
 
+void litehtml::document::flush_elements_logic(
+	litehtml::document::ptr &shared_from_this,
+	const litehtml::tchar_t* disp_str,
+	litehtml::element::ptr& el_ptr,
+	litehtml::elements_vector& tmp,
+	litehtml::elements_vector::iterator& first_iter,
+	litehtml::elements_vector::iterator& cur_iter)
+{
+	element::ptr annon_tag = lhmemory::make_shared<html_tag>(shared_from_this);
+	style st;
+	st.add_property(_t("display"), disp_str, 0, false);
+	annon_tag->add_style(st);
+	annon_tag->parent(el_ptr);
+	annon_tag->parse_styles();
+	std::for_each(tmp.begin(), tmp.end(),
+		logic2(annon_tag)
+		/*[&annon_tag](element::ptr& el)
+		{
+		annon_tag->appendChild(el);
+		}*/
+		);
+	first_iter = el_ptr->m_children.insert(first_iter, annon_tag);
+	cur_iter = first_iter + 1;
+	while (cur_iter != el_ptr->m_children.end() && (*cur_iter)->parent() != el_ptr)
+	{
+		cur_iter = el_ptr->m_children.erase(cur_iter);
+	}
+	first_iter = cur_iter;
+	tmp.clear();
+}
+
 void litehtml::document::fix_table_children(element::ptr& el_ptr, style_display disp, const tchar_t* disp_str)
 {
 	elements_vector tmp;
 	elements_vector::iterator first_iter = el_ptr->m_children.begin();
 	elements_vector::iterator cur_iter = el_ptr->m_children.begin();
 
-	auto flush_elements = [&]()
+	litehtml::document::flush_elements_logic(
+		shared_from_this(),
+		disp_str,
+		el_ptr,
+		tmp,
+		first_iter,
+		cur_iter);
+	/*auto flush_elements = [&]()
 	{
 		element::ptr annon_tag = lhmemory::make_shared<html_tag>(shared_from_this());
 		style st;
@@ -824,7 +874,7 @@ void litehtml::document::fix_table_children(element::ptr& el_ptr, style_display 
 		}
 		first_iter = cur_iter;
 		tmp.clear();
-	};
+	};*/
 
 	while (cur_iter != el_ptr->m_children.end())
 	{
@@ -842,7 +892,14 @@ void litehtml::document::fix_table_children(element::ptr& el_ptr, style_display 
 		}
 		else if (!tmp.empty())
 		{
-			flush_elements();
+			//flush_elements();
+			litehtml::document::flush_elements_logic(
+				shared_from_this(),
+				disp_str,
+				el_ptr,
+				tmp,
+				first_iter,
+				cur_iter);
 		}
 		else
 		{
@@ -851,25 +908,48 @@ void litehtml::document::fix_table_children(element::ptr& el_ptr, style_display 
 	}
 	if (!tmp.empty())
 	{
-		flush_elements();
+		//flush_elements();
+		litehtml::document::flush_elements_logic(
+			shared_from_this(),
+			disp_str,
+			el_ptr,
+			tmp,
+			first_iter,
+			cur_iter);
 	}
 }
+
+class logic1
+{
+	litehtml::element::ptr& el_ptr;
+public:
+	logic1(litehtml::element::ptr& _el_ptr) : el_ptr(_el_ptr) {}
+	bool operator()(litehtml::element::ptr& el)
+	{
+		if (el == el_ptr)
+		{
+			return true;
+		}
+		return false;
+	}
+};
 
 void litehtml::document::fix_table_parent(element::ptr& el_ptr, style_display disp, const tchar_t* disp_str)
 {
 	element::ptr parent = el_ptr->parent();
-
+	
 	if (parent->get_display() != disp)
 	{
 		elements_vector::iterator this_element = std::find_if(parent->m_children.begin(), parent->m_children.end(),
-			[&](element::ptr& el)
+			logic1(el_ptr)
+			/*[&](element::ptr& el)
 			{
 				if (el == el_ptr)
 				{
 					return true;
 				}
 				return false;
-			}
+			}*/
 		);
 		if (this_element != parent->m_children.end())
 		{
@@ -918,10 +998,11 @@ void litehtml::document::fix_table_parent(element::ptr& el_ptr, style_display di
 			annon_tag->parent(parent);
 			annon_tag->parse_styles();
 			std::for_each(first, last + 1,
-				[&annon_tag](element::ptr& el)
+				logic2(annon_tag)
+				/*[&annon_tag](element::ptr& el)
 				{
 					annon_tag->appendChild(el);
-				}
+				}*/
 			);
 			first = parent->m_children.erase(first, last + 1);
 			parent->m_children.insert(first, annon_tag);

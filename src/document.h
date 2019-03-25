@@ -109,6 +109,13 @@ namespace litehtml
 		void fix_tables_layout();
 		void fix_table_children(element::ptr& el_ptr, style_display disp, const tchar_t* disp_str);
 		void fix_table_parent(element::ptr& el_ptr, style_display disp, const tchar_t* disp_str);
+		static void flush_elements_logic(
+			litehtml::document::ptr &shared_from_this,
+			const litehtml::tchar_t* disp_str,
+			litehtml::element::ptr& el_ptr,
+			litehtml::elements_vector& tmp,
+			litehtml::elements_vector::iterator& first_iter,
+			litehtml::elements_vector::iterator& cur_iter);
 	};
 
 	inline element::ptr document::root()

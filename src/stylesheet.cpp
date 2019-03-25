@@ -124,13 +124,23 @@ bool litehtml::css::parse_selectors( const tstring& txt, const litehtml::style::
 	return added_something;
 }
 
+class logic1
+{
+public:
+	bool operator()(const litehtml::css_selector::ptr& v1, const litehtml::css_selector::ptr& v2)
+	{
+		return (*v1) < (*v2);
+	}
+};
+
 void litehtml::css::sort_selectors()
 {
 	std::sort(m_selectors.begin(), m_selectors.end(),
-		 [](const css_selector::ptr& v1, const css_selector::ptr& v2)
+		logic1()
+		 /*[](const css_selector::ptr& v1, const css_selector::ptr& v2)
 		 {
 			 return (*v1) < (*v2);
-		 }
+		 }*/
 	);
 }
 
