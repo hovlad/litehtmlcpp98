@@ -8,7 +8,7 @@ namespace litehtml
 	class el_base : public html_tag
 	{
 	public:
-		el_base(const lhmemory::shared_ptr<litehtml::document>& doc);
+		el_base(const lhmemory_shared_ptr<litehtml::document>& doc);
 		virtual ~el_base();
 
 		virtual void	parse_attributes() override;

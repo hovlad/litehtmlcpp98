@@ -12,7 +12,7 @@ namespace litehtml
 	class element;
 
 	typedef std::map<litehtml::tstring, litehtml::tstring>			string_map;
-	typedef std::vector< lhmemory::shared_ptr<litehtml::element> >		elements_vector;
+	typedef std::vector< lhmemory_shared_ptr<litehtml::element> >		elements_vector;
 	typedef std::vector<int>										int_vector;
 	typedef std::vector<litehtml::tstring>							string_vector;
 
@@ -523,9 +523,14 @@ namespace litehtml
 		position		pos;
 		element_float	float_side;
 		element_clear	clear_floats;
-		lhmemory::shared_ptr<element>	el;
+		lhmemory_shared_ptr<element>	el;
 
+#ifdef  LITEHTMLCPP98
+		floated_box() {};
+#else
 		floated_box() = default;
+#endif
+
 		floated_box(const floated_box& val)
 		{
 			pos = val.pos;
@@ -541,6 +546,7 @@ namespace litehtml
 			el = val.el;
 			return *this;
 		}
+#ifndef LITEHTMLCPP98
 		floated_box(floated_box&& val)
 		{
 			pos = val.pos;
@@ -555,6 +561,7 @@ namespace litehtml
 			clear_floats = val.clear_floats;
 			el = std::move(val.el);
 		}
+#endif
 	};
 
 	struct int_int_cache

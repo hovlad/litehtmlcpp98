@@ -29,11 +29,13 @@ namespace litehtml
 				idx = val.idx;
 				el = val.el;
 			}
+#ifndef LITEHTMLCPP98
 			stack_item(stack_item&& val)
 			{
 				idx = val.idx;
 				el = std::move(val.el);
 			}
+#endif
 		};
 
 		std::vector<stack_item>		m_stack;

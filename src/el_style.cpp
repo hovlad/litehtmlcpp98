@@ -3,7 +3,7 @@
 #include "document.h"
 
 
-litehtml::el_style::el_style(const lhmemory::shared_ptr<litehtml::document>& doc) : litehtml::element(doc)
+litehtml::el_style::el_style(const lhmemory_shared_ptr<litehtml::document>& doc) : litehtml::element(doc)
 {
 
 }
@@ -17,7 +17,8 @@ void litehtml::el_style::parse_attributes()
 {
 	tstring text;
 
-	for (litehtml::element::ptr& el : m_children)
+	//for (litehtml::element::ptr& el : m_children)
+	BOOST_FOREACH (const litehtml::element::ptr& el , m_children)
 	{
 		el->get_text(text);
 	}

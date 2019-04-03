@@ -2,7 +2,7 @@
 #include "document.h"
 #include "el_space.h"
 
-litehtml::el_space::el_space(const tchar_t* text, const lhmemory::shared_ptr<litehtml::document>& doc) : el_text(text, doc)
+litehtml::el_space::el_space(const tchar_t* text, const lhmemory_shared_ptr<litehtml::document>& doc) : el_text(text, doc)
 {
 }
 

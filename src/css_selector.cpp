@@ -213,11 +213,11 @@ bool litehtml::css_selector::parse( const tstring& text )
 		break;
 	}
 
-	m_left = 0;
+	m_left.reset();
 
 	if(!left.empty())
 	{
-		m_left = lhmemory::make_shared<css_selector>(media_query_list::ptr(0));
+		m_left = lhmemory_make_shared<css_selector>(media_query_list::ptr());
 		if(!m_left->parse(left))
 		{
 			return false;

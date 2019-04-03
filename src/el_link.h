@@ -8,7 +8,7 @@ namespace litehtml
 	class el_link : public html_tag
 	{
 	public:
-		el_link(const lhmemory::shared_ptr<litehtml::document>& doc);
+		el_link(const lhmemory_shared_ptr<litehtml::document>& doc);
 		virtual ~el_link();
 
 	protected:

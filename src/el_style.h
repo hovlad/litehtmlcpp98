@@ -9,7 +9,7 @@ namespace litehtml
 	{
 		elements_vector		m_children;
 	public:
-		el_style(const lhmemory::shared_ptr<litehtml::document>& doc);
+		el_style(const lhmemory_shared_ptr<litehtml::document>& doc);
 		virtual ~el_style();
 
 		virtual void			parse_attributes() override;

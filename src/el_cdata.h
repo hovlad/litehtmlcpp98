@@ -9,7 +9,7 @@ namespace litehtml
 	{
 		tstring	m_text;
 	public:
-		el_cdata(const lhmemory::shared_ptr<litehtml::document>& doc);
+		el_cdata(const lhmemory_shared_ptr<litehtml::document>& doc);
 		virtual ~el_cdata();
 
 		virtual void	get_text(tstring& text) override;

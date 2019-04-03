@@ -49,13 +49,13 @@ namespace litehtml
 
 	class html_tag;
 
-	class document : public lhmemory::enable_shared_from_this<document>
+	class document : public lhmemory_enable_shared_from_this<document>
 	{
 	public:
-		typedef lhmemory::shared_ptr<document>	ptr;
-		typedef lhmemory::weak_ptr<document>		weak_ptr;
+		typedef lhmemory_shared_ptr<document>	ptr;
+		typedef lhmemory_weak_ptr<document>		weak_ptr;
 	private:
-		lhmemory::shared_ptr<element>			m_root;
+		lhmemory_shared_ptr<element>			m_root;
 		document_container*					m_container;
 		fonts_map							m_fonts;
 		css_text::vector					m_css;
@@ -109,7 +109,7 @@ namespace litehtml
 		void fix_tables_layout();
 		void fix_table_children(element::ptr& el_ptr, style_display disp, const tchar_t* disp_str);
 		void fix_table_parent(element::ptr& el_ptr, style_display disp, const tchar_t* disp_str);
-		static void flush_elements_logic(
+		void flush_elements_logic(
 			litehtml::document::ptr &shared_from_this,
 			const litehtml::tchar_t* disp_str,
 			litehtml::element::ptr& el_ptr,

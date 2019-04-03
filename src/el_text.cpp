@@ -2,7 +2,7 @@
 #include "el_text.h"
 #include "document.h"
 
-litehtml::el_text::el_text(const tchar_t* text, const lhmemory::shared_ptr<litehtml::document>& doc) : element(doc)
+litehtml::el_text::el_text(const tchar_t* text, const lhmemory_shared_ptr<litehtml::document>& doc) : element(doc)
 {
 	if(text)
 	{

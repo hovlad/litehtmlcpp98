@@ -2,7 +2,7 @@
 #include "el_anchor.h"
 #include "document.h"
 
-litehtml::el_anchor::el_anchor(const lhmemory::shared_ptr<litehtml::document>& doc) : html_tag(doc)
+litehtml::el_anchor::el_anchor(const lhmemory_shared_ptr<litehtml::document>& doc) : html_tag(doc)
 {
 }
 

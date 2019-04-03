@@ -2,7 +2,7 @@
 #include "el_tr.h"
 
 
-litehtml::el_tr::el_tr(const lhmemory::shared_ptr<litehtml::document>& doc) : html_tag(doc)
+litehtml::el_tr::el_tr(const lhmemory_shared_ptr<litehtml::document>& doc) : html_tag(doc)
 {
 
 }
@@ -35,7 +35,8 @@ void litehtml::el_tr::parse_attributes()
 void litehtml::el_tr::get_inline_boxes( position::vector& boxes )
 {
 	position pos;
-	for (litehtml::element::ptr& el : m_children)
+	//for (litehtml::element::ptr& el : m_children)
+	lhmemory_for (litehtml::element::ptr& el , m_children)
 	{
 		if(el->get_display() == display_table_cell)
 		{

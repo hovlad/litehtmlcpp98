@@ -5,7 +5,7 @@
 #include <algorithm>
 
 
-litehtml::el_table::el_table(const lhmemory::shared_ptr<litehtml::document>& doc) : html_tag(doc)
+litehtml::el_table::el_table(const lhmemory_shared_ptr<litehtml::document>& doc) : html_tag(doc)
 {
 	m_border_spacing_x	= 0;
 	m_border_spacing_y	= 0;

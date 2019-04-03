@@ -24,7 +24,7 @@ namespace litehtml
 			border_bottom	= 0;
 			border_top		= 0;
 			height			= 0;
-			el_row			= nullptr;
+			el_row			= element::ptr();
 			css_height.predef(0);
 		}
 
@@ -54,7 +54,7 @@ namespace litehtml
 			css_height = val.css_height;
 			el_row = val.el_row;
 		}
-
+#ifndef LITEHTMLCPP98
 		table_row(table_row&& val)
 		{
 			min_height = val.min_height;
@@ -66,6 +66,7 @@ namespace litehtml
 			css_height = val.css_height;
 			el_row = std::move(val.el_row);
 		}
+#endif
 	};
 
 	struct table_column
@@ -165,7 +166,7 @@ namespace litehtml
 			height			= 0;
 			colspan			= 1;
 			rowspan			= 1;
-			el				= nullptr;
+			el				= element::ptr();
 		}
 
 		table_cell(const table_cell& val)
@@ -182,6 +183,7 @@ namespace litehtml
 			borders			= val.borders;
 		}
 
+#ifndef LITEHTMLCPP98
 		table_cell(const table_cell&& val)
 		{
 			el = std::move(val.el);
@@ -195,6 +197,8 @@ namespace litehtml
 			max_height = val.max_height;
 			borders = val.borders;
 		}
+#endif
+
 	};
 
 	class table_grid

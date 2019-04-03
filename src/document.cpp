@@ -35,7 +35,7 @@ litehtml::document::document(litehtml::document_container* objContainer, litehtm
 
 litehtml::document::~document()
 {
-	m_over_element = 0;
+	m_over_element.reset();
 	if(m_container)
 	{
 		for(fonts_map::iterator f = m_fonts.begin(); f != m_fonts.end(); f++)
@@ -56,7 +56,7 @@ litehtml::document::ptr litehtml::document::createFromUTF8(const char* str, lite
 	GumboOutput* output = gumbo_parse((const char*) str);
 
 	// Create litehtml::document
-	litehtml::document::ptr doc = lhmemory::make_shared<litehtml::document>(objPainter, ctx);
+	litehtml::document::ptr doc = lhmemory_make_shared<litehtml::document>(objPainter, ctx);
 
 	// Create litehtml::elements.
 	elements_vector root_elements;
@@ -89,7 +89,7 @@ litehtml::document::ptr litehtml::document::createFromUTF8(const char* str, lite
 			}
 			else
 			{
-				media = 0;
+				media.reset();
 			}
 			doc->m_styles.parse_stylesheet(css->text.c_str(), css->baseurl.c_str(), doc, media);
 		}
@@ -509,52 +509,52 @@ litehtml::element::ptr litehtml::document::create_element(const tchar_t* tag_nam
 	{
 		if(!t_strcmp(tag_name, _t("br")))
 		{
-			newTag = lhmemory::make_shared<litehtml::el_break>(this_doc);
+			newTag = lhmemory_make_shared<litehtml::el_break>(this_doc);
 		} else if(!t_strcmp(tag_name, _t("p")))
 		{
-			newTag = lhmemory::make_shared<litehtml::el_para>(this_doc);
+			newTag = lhmemory_make_shared<litehtml::el_para>(this_doc);
 		} else if(!t_strcmp(tag_name, _t("img")))
 		{
-			newTag = lhmemory::make_shared<litehtml::el_image>(this_doc);
+			newTag = lhmemory_make_shared<litehtml::el_image>(this_doc);
 		} else if(!t_strcmp(tag_name, _t("table")))
 		{
-			newTag = lhmemory::make_shared<litehtml::el_table>(this_doc);
+			newTag = lhmemory_make_shared<litehtml::el_table>(this_doc);
 		} else if(!t_strcmp(tag_name, _t("td")) || !t_strcmp(tag_name, _t("th")))
 		{
-			newTag = lhmemory::make_shared<litehtml::el_td>(this_doc);
+			newTag = lhmemory_make_shared<litehtml::el_td>(this_doc);
 		} else if(!t_strcmp(tag_name, _t("link")))
 		{
-			newTag = lhmemory::make_shared<litehtml::el_link>(this_doc);
+			newTag = lhmemory_make_shared<litehtml::el_link>(this_doc);
 		} else if(!t_strcmp(tag_name, _t("title")))
 		{
-			newTag = lhmemory::make_shared<litehtml::el_title>(this_doc);
+			newTag = lhmemory_make_shared<litehtml::el_title>(this_doc);
 		} else if(!t_strcmp(tag_name, _t("a")))
 		{
-			newTag = lhmemory::make_shared<litehtml::el_anchor>(this_doc);
+			newTag = lhmemory_make_shared<litehtml::el_anchor>(this_doc);
 		} else if(!t_strcmp(tag_name, _t("tr")))
 		{
-			newTag = lhmemory::make_shared<litehtml::el_tr>(this_doc);
+			newTag = lhmemory_make_shared<litehtml::el_tr>(this_doc);
 		} else if(!t_strcmp(tag_name, _t("style")))
 		{
-			newTag = lhmemory::make_shared<litehtml::el_style>(this_doc);
+			newTag = lhmemory_make_shared<litehtml::el_style>(this_doc);
 		} else if(!t_strcmp(tag_name, _t("base")))
 		{
-			newTag = lhmemory::make_shared<litehtml::el_base>(this_doc);
+			newTag = lhmemory_make_shared<litehtml::el_base>(this_doc);
 		} else if(!t_strcmp(tag_name, _t("body")))
 		{
-			newTag = lhmemory::make_shared<litehtml::el_body>(this_doc);
+			newTag = lhmemory_make_shared<litehtml::el_body>(this_doc);
 		} else if(!t_strcmp(tag_name, _t("div")))
 		{
-			newTag = lhmemory::make_shared<litehtml::el_div>(this_doc);
+			newTag = lhmemory_make_shared<litehtml::el_div>(this_doc);
 		} else if(!t_strcmp(tag_name, _t("script")))
 		{
-			newTag = lhmemory::make_shared<litehtml::el_script>(this_doc);
+			newTag = lhmemory_make_shared<litehtml::el_script>(this_doc);
 		} else if(!t_strcmp(tag_name, _t("font")))
 		{
-			newTag = lhmemory::make_shared<litehtml::el_font>(this_doc);
+			newTag = lhmemory_make_shared<litehtml::el_font>(this_doc);
 		} else
 		{
-			newTag = lhmemory::make_shared<litehtml::html_tag>(this_doc);
+			newTag = lhmemory_make_shared<litehtml::html_tag>(this_doc);
 		}
 	}
 
@@ -713,11 +713,11 @@ void litehtml::document::create_node(GumboNode* node, elements_vector& elements)
 				{
 					if (!str.empty())
 					{
-						elements.push_back(lhmemory::make_shared<el_text>(litehtml_from_wchar(str.c_str()), shared_from_this()));
+						elements.push_back(lhmemory_make_shared<el_text>(litehtml_from_wchar(str.c_str()), shared_from_this()));
 						str.clear();
 					}
 					str += c;
-					elements.push_back(lhmemory::make_shared<el_space>(litehtml_from_wchar(str.c_str()), shared_from_this()));
+					elements.push_back(lhmemory_make_shared<el_space>(litehtml_from_wchar(str.c_str()), shared_from_this()));
 					str.clear();
 				}
 				// CJK character range
@@ -725,11 +725,11 @@ void litehtml::document::create_node(GumboNode* node, elements_vector& elements)
 				{
 					if (!str.empty())
 					{
-						elements.push_back(lhmemory::make_shared<el_text>(litehtml_from_wchar(str.c_str()), shared_from_this()));
+						elements.push_back(lhmemory_make_shared<el_text>(litehtml_from_wchar(str.c_str()), shared_from_this()));
 						str.clear();
 					}
 					str += c;
-					elements.push_back(lhmemory::make_shared<el_text>(litehtml_from_wchar(str.c_str()), shared_from_this()));
+					elements.push_back(lhmemory_make_shared<el_text>(litehtml_from_wchar(str.c_str()), shared_from_this()));
 					str.clear();
 				}
 				else
@@ -739,20 +739,20 @@ void litehtml::document::create_node(GumboNode* node, elements_vector& elements)
 			}
 			if (!str.empty())
 			{
-				elements.push_back(lhmemory::make_shared<el_text>(litehtml_from_wchar(str.c_str()), shared_from_this()));
+				elements.push_back(lhmemory_make_shared<el_text>(litehtml_from_wchar(str.c_str()), shared_from_this()));
 			}
 		}
 		break;
 	case GUMBO_NODE_CDATA:
 		{
-			element::ptr ret = lhmemory::make_shared<el_cdata>(shared_from_this());
+			element::ptr ret = lhmemory_make_shared<el_cdata>(shared_from_this());
 			ret->set_data(litehtml_from_utf8(node->v.text.text));
 			elements.push_back(ret);
 		}
 		break;
 	case GUMBO_NODE_COMMENT:
 		{
-			element::ptr ret = lhmemory::make_shared<el_comment>(shared_from_this());
+			element::ptr ret = lhmemory_make_shared<el_comment>(shared_from_this());
 			ret->set_data(litehtml_from_utf8(node->v.text.text));
 			elements.push_back(ret);
 		}
@@ -762,7 +762,7 @@ void litehtml::document::create_node(GumboNode* node, elements_vector& elements)
 			tstring str = litehtml_from_utf8(node->v.text.text);
 			for (size_t i = 0; i < str.length(); i++)
 			{
-				elements.push_back(lhmemory::make_shared<el_space>(str.substr(i, 1).c_str(), shared_from_this()));
+				elements.push_back(lhmemory_make_shared<el_space>(str.substr(i, 1).c_str(), shared_from_this()));
 			}
 		}
 		break;
@@ -816,7 +816,7 @@ void litehtml::document::flush_elements_logic(
 	litehtml::elements_vector::iterator& first_iter,
 	litehtml::elements_vector::iterator& cur_iter)
 {
-	element::ptr annon_tag = lhmemory::make_shared<html_tag>(shared_from_this);
+	element::ptr annon_tag = lhmemory_make_shared<html_tag>(shared_from_this);
 	style st;
 	st.add_property(_t("display"), disp_str, 0, false);
 	annon_tag->add_style(st);
@@ -845,8 +845,9 @@ void litehtml::document::fix_table_children(element::ptr& el_ptr, style_display 
 	elements_vector::iterator first_iter = el_ptr->m_children.begin();
 	elements_vector::iterator cur_iter = el_ptr->m_children.begin();
 
+	document::ptr this_doc = shared_from_this();
 	litehtml::document::flush_elements_logic(
-		shared_from_this(),
+		this_doc,
 		disp_str,
 		el_ptr,
 		tmp,
@@ -854,7 +855,7 @@ void litehtml::document::fix_table_children(element::ptr& el_ptr, style_display 
 		cur_iter);
 	/*auto flush_elements = [&]()
 	{
-		element::ptr annon_tag = lhmemory::make_shared<html_tag>(shared_from_this());
+		element::ptr annon_tag = lhmemory_make_shared<html_tag>(shared_from_this());
 		style st;
 		st.add_property(_t("display"), disp_str, 0, false);
 		annon_tag->add_style(st);
@@ -893,8 +894,9 @@ void litehtml::document::fix_table_children(element::ptr& el_ptr, style_display 
 		else if (!tmp.empty())
 		{
 			//flush_elements();
+			document::ptr this_doc = shared_from_this();
 			litehtml::document::flush_elements_logic(
-				shared_from_this(),
+				this_doc,
 				disp_str,
 				el_ptr,
 				tmp,
@@ -909,8 +911,9 @@ void litehtml::document::fix_table_children(element::ptr& el_ptr, style_display 
 	if (!tmp.empty())
 	{
 		//flush_elements();
+		document::ptr this_doc = shared_from_this();
 		litehtml::document::flush_elements_logic(
-			shared_from_this(),
+			this_doc,
 			disp_str,
 			el_ptr,
 			tmp,
@@ -991,7 +994,7 @@ void litehtml::document::fix_table_parent(element::ptr& el_ptr, style_display di
 			}
 
 			// extract elements with the same display and wrap them with anonymous object
-			element::ptr annon_tag = lhmemory::make_shared<html_tag>(shared_from_this());
+			element::ptr annon_tag = lhmemory_make_shared<html_tag>(shared_from_this());
 			style st;
 			st.add_property(_t("display"), disp_str, 0, false);
 			annon_tag->add_style(st);

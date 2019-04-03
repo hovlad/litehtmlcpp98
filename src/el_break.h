@@ -8,7 +8,7 @@ namespace litehtml
 	class el_break : public html_tag
 	{
 	public:
-		el_break(const lhmemory::shared_ptr<litehtml::document>& doc);
+		el_break(const lhmemory_shared_ptr<litehtml::document>& doc);
 		virtual ~el_break();
 
 		virtual bool is_break() const override;

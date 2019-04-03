@@ -457,7 +457,8 @@ void litehtml::table_grid::calc_rows_height(int blockHeight, int borderSpacingY)
 	int min_table_height = 0;
 
 	// compute vertical size inferred by cells
-	for (litehtml::table_row& row : m_rows)
+	//for (litehtml::table_row& row : m_rows)
+	lhmemory_for (litehtml::table_row& row , m_rows)
 	{
 		if (!row.css_height.is_predefined())
 		{
@@ -479,7 +480,8 @@ void litehtml::table_grid::calc_rows_height(int blockHeight, int borderSpacingY)
 	{
 		int extra_height = blockHeight - min_table_height;
 		int auto_count = 0; // number of rows with height=auto
-		for (litehtml::table_row& row : m_rows)
+		//for (litehtml::table_row& row : m_rows)
+		lhmemory_for (litehtml::table_row& row , m_rows)
 		{
 			if (!row.css_height.is_predefined() && row.css_height.units() == css_units_percentage)
 			{
@@ -504,7 +506,8 @@ void litehtml::table_grid::calc_rows_height(int blockHeight, int borderSpacingY)
 			{
 				// distribute height to the rows with height=auto
 				int extra_row_height = (int)(extra_height / auto_count);
-				for (litehtml::table_row& row : m_rows)
+				//for (litehtml::table_row& row : m_rows)
+				lhmemory_for(litehtml::table_row& row , m_rows)
 				{
 					if (row.css_height.is_predefined())
 					{
@@ -518,7 +521,8 @@ void litehtml::table_grid::calc_rows_height(int blockHeight, int borderSpacingY)
 				if (!m_rows.empty())
 				{
 					int extra_row_height = (int)(extra_height / m_rows.size());
-					for (litehtml::table_row& row : m_rows)
+					//for (litehtml::table_row& row : m_rows)
+					lhmemory_for (litehtml::table_row& row , m_rows)
 					{
 						row.height += extra_row_height;
 					}

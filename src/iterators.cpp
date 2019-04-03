@@ -34,7 +34,7 @@ litehtml::element::ptr litehtml::elements_iterator::next(bool ret_parent)
 		}
 	}
 
-	return 0;
+	return litehtml::element::ptr();
 }
 
 void litehtml::elements_iterator::next_idx()

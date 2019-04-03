@@ -14,7 +14,7 @@ namespace litehtml
 	class box
 	{
 	public:
-		typedef std::unique_ptr<litehtml::box>	ptr;
+		typedef lhmemory_unique_ptr<litehtml::box>	ptr;
 		typedef std::vector< box::ptr >			vector;
 	protected:
 		int		m_box_top;
@@ -57,7 +57,7 @@ namespace litehtml
 	public:
 		block_box(int top, int left, int right) : box(top, left, right)
 		{
-			m_element = 0;
+			m_element.reset();
 		}
 
 		virtual litehtml::box_type	get_type();

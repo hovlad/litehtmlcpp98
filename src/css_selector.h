@@ -3,6 +3,7 @@
 
 #include "style.h"
 #include "media_query.h"
+#include "lhmemory.h"
 
 namespace litehtml
 {
@@ -172,7 +173,7 @@ namespace litehtml
 	class css_selector
 	{
 	public:
-		typedef lhmemory::shared_ptr<css_selector>	ptr;
+		typedef lhmemory_shared_ptr<css_selector>	ptr;
 		typedef std::vector<css_selector::ptr>	vector;
 	public:
 		selector_specificity	m_specificity;
@@ -199,10 +200,10 @@ namespace litehtml
 			m_right			= val.m_right;
 			if(val.m_left)
 			{
-				m_left			= lhmemory::make_shared<css_selector>(*val.m_left);
+				m_left			= lhmemory_make_shared<css_selector>(*val.m_left);
 			} else
 			{
-				m_left = 0;
+				m_left.reset();
 			}
 			m_combinator	= val.m_combinator;
 			m_specificity	= val.m_specificity;
@@ -261,7 +262,7 @@ namespace litehtml
 	class used_selector
 	{
 	public:
-		typedef std::unique_ptr<used_selector>	ptr;
+		typedef lhmemory_unique_ptr<used_selector>	ptr;
 		typedef std::vector<used_selector::ptr>	vector;
 
 		css_selector::ptr	m_selector;

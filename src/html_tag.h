@@ -38,7 +38,7 @@ namespace litehtml
 		friend class block_box;
 		friend class line_box;
 	public:
-		typedef lhmemory::shared_ptr<litehtml::html_tag>	ptr;
+		typedef lhmemory_shared_ptr<litehtml::html_tag>	ptr;
 	protected:
 		box::vector				m_boxes;
 		string_vector			m_class_values;
@@ -88,7 +88,7 @@ namespace litehtml
 		int_int_cache			m_cahe_line_right;
 
 		// data for table rendering
-		std::unique_ptr<table_grid>	m_grid;
+		lhmemory_unique_ptr<table_grid>	m_grid;
 		css_length				m_css_border_spacing_x;
 		css_length				m_css_border_spacing_y;
 		int						m_border_spacing_x;
@@ -98,7 +98,7 @@ namespace litehtml
 		virtual void			select_all(const css_selector& selector, elements_vector& res) override;
 
 	public:
-		html_tag(const lhmemory::shared_ptr<litehtml::document>& doc);
+		html_tag(const lhmemory_shared_ptr<litehtml::document>& doc);
 		virtual ~html_tag();
 
 		/* render functions */

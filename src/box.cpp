@@ -192,7 +192,8 @@ void litehtml::line_box::finish(bool last_box)
 
 	m_height = 0;
 	// find line box baseline and line-height
-	for (const litehtml::element::ptr& el : m_items)
+	//for (const litehtml::element::ptr& el : m_items)
+	BOOST_FOREACH (const litehtml::element::ptr& el , m_items)
 	{
 		if(el->get_display() == display_inline_text)
 		{
@@ -215,7 +216,8 @@ void litehtml::line_box::finish(bool last_box)
 	int y1	= 0;
 	int y2	= m_height;
 
-	for (const litehtml::element::ptr& el : m_items)
+	//for (const litehtml::element::ptr& el : m_items)
+	BOOST_FOREACH (const litehtml::element::ptr& el , m_items)
 	{
 		if(el->get_display() == display_inline_text)
 		{
@@ -254,7 +256,8 @@ void litehtml::line_box::finish(bool last_box)
 
 	css_offsets offsets;
 
-	for (const litehtml::element::ptr& el : m_items)
+	//for (const litehtml::element::ptr& el : m_items)
+	BOOST_FOREACH (const litehtml::element::ptr& el , m_items)
 	{
 		el->m_pos.y -= y1;
 		el->m_pos.y += m_box_top;
@@ -369,7 +372,8 @@ int litehtml::line_box::bottom_margin()
 void litehtml::line_box::y_shift( int shift )
 {
 	m_box_top += shift;
-	for (litehtml::element::ptr& el : m_items)
+	//for (litehtml::element::ptr& el : m_items)
+	BOOST_FOREACH (const litehtml::element::ptr& el , m_items)
 	{
 		el->m_pos.y += shift;
 	}
@@ -381,7 +385,8 @@ bool litehtml::line_box::is_break_only()
 
 	if(m_items.front()->is_break())
 	{
-		for (litehtml::element::ptr& el : m_items)
+		//for (litehtml::element::ptr& el : m_items)
+		BOOST_FOREACH (const litehtml::element::ptr& el , m_items)
 		{
 			if(!el->m_skip)
 			{
@@ -424,7 +429,8 @@ void litehtml::line_box::new_width( int left, int right, elements_vector& els )
 			els.insert(els.begin(), remove_begin, m_items.end());
 			m_items.erase(remove_begin, m_items.end());
 
-			for (const litehtml::element::ptr& el : els)
+			//for (const litehtml::element::ptr& el : els)
+			BOOST_FOREACH (const litehtml::element::ptr& el , els)
 			{
 				el->m_box = 0;
 			}

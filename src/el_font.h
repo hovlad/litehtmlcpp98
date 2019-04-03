@@ -8,7 +8,7 @@ namespace litehtml
 	class el_font : public html_tag
 	{
 	public:
-		el_font(const lhmemory::shared_ptr<litehtml::document>& doc);
+		el_font(const lhmemory_shared_ptr<litehtml::document>& doc);
 		virtual ~el_font();
 
 		virtual void parse_attributes() override;

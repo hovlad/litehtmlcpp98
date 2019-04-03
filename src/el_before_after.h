@@ -8,7 +8,7 @@ namespace litehtml
 	class el_before_after_base : public html_tag
 	{
 	public:
-		el_before_after_base(const lhmemory::shared_ptr<litehtml::document>& doc, bool before);
+		el_before_after_base(const lhmemory_shared_ptr<litehtml::document>& doc, bool before);
 		virtual ~el_before_after_base();
 
 		virtual void add_style(const litehtml::style& st) override;
@@ -22,7 +22,7 @@ namespace litehtml
 	class el_before : public el_before_after_base
 	{
 	public:
-		el_before(const lhmemory::shared_ptr<litehtml::document>& doc) : el_before_after_base(doc, true)
+		el_before(const lhmemory_shared_ptr<litehtml::document>& doc) : el_before_after_base(doc, true)
 		{
 
 		}
@@ -31,7 +31,7 @@ namespace litehtml
 	class el_after : public el_before_after_base
 	{
 	public:
-		el_after(const lhmemory::shared_ptr<litehtml::document>& doc) : el_before_after_base(doc, false)
+		el_after(const lhmemory_shared_ptr<litehtml::document>& doc) : el_before_after_base(doc, false)
 		{
 
 		}

@@ -8,7 +8,7 @@ namespace litehtml
 	class el_tr : public html_tag
 	{
 	public:
-		el_tr(const lhmemory::shared_ptr<litehtml::document>& doc);
+		el_tr(const lhmemory_shared_ptr<litehtml::document>& doc);
 		virtual ~el_tr();
 
 		virtual void	parse_attributes() override;
