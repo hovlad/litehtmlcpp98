@@ -60,3 +60,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE LITEHTML_UTF8)
 
 # Gumbo
 target_link_libraries(${PROJECT_NAME} PUBLIC gumbo)
+
+# Set LITEHTMLCPP98 define.
+target_compile_definitions(${PROJECT_NAME} PRIVATE LITEHTMLCPP98)
+
