@@ -5,7 +5,9 @@
 #ifndef WINCE
 #include <locale>
 #endif
-#ifndef LITEHTMLCPP98
+#ifdef LITEHTMLCPP98
+litehtml::string_map litehtml::style::m_valid_values;
+#else
 litehtml::string_map litehtml::style::m_valid_values =
 {
 	{ _t("white-space"), white_space_strings }
