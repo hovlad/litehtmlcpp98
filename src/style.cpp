@@ -6,6 +6,7 @@
 #include <locale>
 #endif
 #ifdef LITEHTMLCPP98
+#include <boost/assign.hpp>
 litehtml::string_map litehtml::style::m_valid_values;
 #else
 litehtml::string_map litehtml::style::m_valid_values =
@@ -17,7 +18,7 @@ litehtml::string_map litehtml::style::m_valid_values =
 litehtml::style::style()
 {
 #ifdef LITEHTMLCPP98
-	if (m_valid_values.empty()) { m_valid_values[0] = (_t("white-space"), white_space_strings); }
+	if (m_valid_values.empty()) { boost::assign::map_list_of(_t("white-space"), white_space_strings); }
 #endif
 }
 
