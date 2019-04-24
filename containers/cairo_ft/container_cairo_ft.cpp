@@ -848,9 +848,9 @@ const litehtml::tchar_t* container_cairo_ft::get_default_font_name() const
 	return "Times New Roman";
 }
 
-lhmemory::shared_ptr<litehtml::element>	container_cairo_ft::create_element(const litehtml::tchar_t *tag_name,
+lhmemory_shared_ptr<litehtml::element>	container_cairo_ft::create_element(const litehtml::tchar_t *tag_name,
 																	  const litehtml::string_map &attributes,
-																	  const lhmemory::shared_ptr<litehtml::document> &doc)
+																	  const lhmemory_shared_ptr<litehtml::document> &doc)
 {
 	return 0;
 }
@@ -894,6 +894,6 @@ void container_cairo_ft::get_language(litehtml::tstring& language, litehtml::tst
 	culture = _t("");
 }
 
-void container_cairo_ft::link(const lhmemory::shared_ptr<litehtml::document> &ptr, const litehtml::element::ptr& el)
+void container_cairo_ft::link(const lhmemory_shared_ptr<litehtml::document> &ptr, const litehtml::element::ptr& el)
 {
 }
